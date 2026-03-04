@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Александр Алёшкин | Личный сайт и блог</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            color: #24292e;
+        }
+        h2 {
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .text-center { text-align: center; }
+        .badges img { margin: 3px; }
+        
+        /* Специальный блок для конкурса */
+        .contest-banner {
+            background: #f0f7ff;
+            border-left: 6px solid #0366d6;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        .contest-banner h3 { margin-top: 0; color: #0366d6; }
+        .contest-banner ul { margin-bottom: 0; }
+        
+        /* Адаптивные картинки и статистика */
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .stats-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #586069;
+            font-size: 0.9em;
+            border-top: 1px solid #eaecef;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Привет! Я Александр Алёшкин 👋</h1>
+    <h3 class="text-center" style="color: #586069; font-weight: 400;">Full-Stack Developer | QA Engineer | Data Scientist | Преподаватель</h3>
+
+    <p class="text-center" style="margin-top: 20px;">
+        <a href="mailto:axlifreeway@hotmail.com" target="_blank">
+            <img src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" alt="Email">
+        </a>
+        <a href="https://github.com/Axlifreeway" target="_blank">
+            <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+        </a>
+    </p>
+
+    <!-- БЛОК ДЛЯ ЖЮРИ КОНКУРСА -->
+    <div class="contest-banner">
+        <h3>🏆 Конкурс «Педагог года Тюменской области»</h3>
+        <p>Добро пожаловать на мой личный сайт! Здесь представлены мои профессиональные компетенции и публикуемые материалы.</p>
+    </div>
+
+    <h2>👨‍💻 Обо мне</h2>
+    <p>Я — разработчик и выпускник ТюмГУ.</p>
+    <p>Мой опыт охватывает весь цикл разработки: от проектирования API на <strong>.NET</strong> и <strong>Laravel</strong> до автоматизации тестирования с помощью <strong>Selenide</strong> и анализа данных на <strong>Python</strong>. Сейчас я также активно занимаюсь передачей своего опыта и преподаванием, объединяя академические знания и реальную IT-практику.</p>
+
+    <h2>🛠️ Мой технологический стек и инструменты</h2>
+    
+    <div class="badges">
+        <p><strong>🔷 Backend & Frameworks</strong><br>
+        <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+        <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
+        <img src="https://img.shields.io/badge/ASP.NET-512BD4?style=for-the-badge&logo=asp.net&logoColor=white">
+        <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
+        <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
+        </p>
+
+        <p><strong>🔷 Databases</strong><br>
+        <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white">
+        <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white">
+        <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+        </p>
+
+        <p><strong>🔷 Testing & QA</strong><br>
+        <img src="https://img.shields.io/badge/Selenide-3d9a75?style=for-the-badge">
+        <img src="https://img.shields.io/badge/TDD-Green?style=for-the-badge">
+        <img src="https://img.shields.io/badge/Автотесты-blueviolet?style=for-the-badge">
+        </p>
+
+        <p><strong>🔷 Tools</strong><br>
+        <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
+        <img src="https://img.shields.io/badge/GitFlow-F05032?style=for-the-badge&logo=git&logoColor=white">
+        <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+        <img src="https://img.shields.io/badge/CI/CD-2088FF?style=for-the-badge&logo=gitlab&logoColor=white">
+        <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
+        </p>
+    </div>
+
+    <h2>📊 Моя IT-практика (GitHub)</h2>
+    <!-- Я убрал таблицу и сделал flex-контейнер, чтобы с телефона всё красиво перестраивалось -->
+    <div class="stats-container">
+        <img src="https://github-readme-stats.vercel.app/api?username=Axlifreeway&show_icons=true&theme=tokyonight&count_private=true&hide_border=true&bg_color=0D1117" alt="Статистика Axlifreeway" />
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Axlifreeway&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117" alt="Топ языки" />
+    </div>
+    <div class="stats-container" style="margin-top: 10px;">
+        <img src="https://github-readme-activity-graph.vercel.app/graph?username=Axlifreeway&theme=tokyo-night&hide_border=true&bg_color=0D1117" alt="График активности"/>
+    </div>
+
+    <div class="footer">
+        © 2026 Александр Алёшкин.
+    </div>
+</div>
+
+</body>
+</html>
