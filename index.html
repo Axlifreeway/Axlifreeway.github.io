@@ -3,140 +3,1116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Александр Алёшкин | Личный сайт и блог</title>
+    <title>Александр Алёшкин — Разработчик & Преподаватель</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #24292e;
-            background-color: #f6f8fa;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a2e;
+            --accent: #00d4aa;
+            --accent2: #7c3aed;
+            --accent3: #f59e0b;
+            --text: #e4e4e7;
+            --text-dim: #71717a;
+            --text-bright: #fafafa;
+            --border: rgba(255,255,255,0.06);
+            --glow: rgba(0, 212, 170, 0.15);
         }
-        .container {
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px) saturate(1.5);
+            background: rgba(10, 10, 15, 0.7);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo span { color: var(--text-dim); font-weight: 400; }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black, transparent);
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            filter: blur(160px);
+            opacity: 0.12;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-glow-1 { background: var(--accent); top: -300px; right: -200px; }
+        .hero-glow-2 { background: var(--accent2); bottom: -300px; left: -200px; animation-delay: -4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero-content {
             max-width: 900px;
             margin: 0 auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
         }
-        h1, h2, h3 {
-            color: #24292e;
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 212, 170, 0.08);
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeUp 0.8s ease both;
         }
-        h2 {
-            border-bottom: 2px solid #eaecef;
-            padding-bottom: 10px;
-            margin-top: 40px;
+
+        .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        .text-center { text-align: center; }
-        .badges img { margin: 3px; }
-        
-        /* Специальный блок для конкурса */
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: var(--text-bright);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.8rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 6rem 2rem;
+            max-height: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--text-bright);
+        }
+
+        /* ===== CONTEST BANNER ===== */
         .contest-banner {
-            background: #f0f7ff;
-            border-left: 6px solid #0366d6;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 4px;
+            max-width: 1100px;
+            margin: 0 auto 0;
+            padding: 0 2rem;
         }
-        .contest-banner h3 { margin-top: 0; color: #0366d6; }
-        .contest-banner ul { margin-bottom: 0; }
-        
-        /* Адаптивные картинки и статистика */
-        .stats-container {
+
+        .contest-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(0, 212, 170, 0.06) 50%, rgba(124, 58, 237, 0.04) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            border-radius: 20px;
+            padding: 2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contest-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(ellipse at 80% 30%, rgba(124, 58, 237, 0.08), transparent 60%);
+            pointer-events: none;
+        }
+
+        .contest-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .contest-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.3rem;
+        }
+
+        .contest-text p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            color: var(--text-dim);
+        }
+
+        .about-text strong {
+            color: var(--text-bright);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.08);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        /* ===== TECH STACK ===== */
+        .stack-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stack-category {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .stack-category:hover {
+            border-color: rgba(0, 212, 170, 0.2);
+        }
+
+        .stack-cat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .stack-cat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .stack-cat-icon.backend { background: rgba(0, 212, 170, 0.12); }
+        .stack-cat-icon.db { background: rgba(124, 58, 237, 0.12); }
+        .stack-cat-icon.qa { background: rgba(245, 158, 11, 0.12); }
+        .stack-cat-icon.tools { background: rgba(239, 68, 68, 0.12); }
+        .stack-cat-icon.data { background: rgba(59, 130, 246, 0.12); }
+
+        .stack-cat-name {
+            font-weight: 700;
+            color: var(--text-bright);
+            font-size: 0.95rem;
+        }
+
+        .stack-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
+            gap: 0.5rem;
         }
-        .stats-container img {
+
+        .stack-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.9rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .stack-tag:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 170, 0.06);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* ===== PROJECTS ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 212, 170, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover::before { opacity: 1; }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .project-icon.green { background: rgba(0, 212, 170, 0.1); }
+        .project-icon.purple { background: rgba(124, 58, 237, 0.1); }
+        .project-icon.amber { background: rgba(245, 158, 11, 0.1); }
+        .project-icon.blue { background: rgba(59, 130, 246, 0.1); }
+
+        .project-link {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .project-card:hover .project-link { color: var(--accent); }
+
+        .project-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            flex-grow: 1;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .project-tech span {
+            padding: 0.25rem 0.6rem;
+            background: rgba(255,255,255,0.04);
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+        }
+
+        /* ===== TEACHING ===== */
+        .teaching-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teaching-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.06), transparent 70%);
+            pointer-events: none;
+        }
+
+        .teaching-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .teaching-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .teaching-item:hover {
+            border-color: var(--border);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .teaching-item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(245, 158, 11, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .teaching-item-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .teaching-item-sub {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 0.2rem;
+        }
+
+        /* ===== GITHUB STATS ===== */
+        .github-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .github-stats img {
             max-width: 100%;
             height: auto;
-            border-radius: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
         }
-        .footer {
-            margin-top: 50px;
+
+        .github-stats img:hover { transform: scale(1.02); }
+
+        /* ===== CONTACT ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-icon.github { background: rgba(255,255,255,0.08); }
+        .contact-icon.email { background: rgba(0, 120, 212, 0.12); }
+        .contact-icon.tg { background: rgba(0, 136, 204, 0.12); }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-bright);
+        }
+
+        .contact-handle {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
             text-align: center;
-            color: #586069;
-            font-size: 0.9em;
-            border-top: 1px solid #eaecef;
-            padding-top: 20px;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.82rem;
+        }
+
+        footer .footer-mono {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero { padding: 5rem 1.5rem 3rem; }
+            section { padding: 4rem 1.5rem; }
+            .contest-card { flex-direction: column; text-align: center; }
+        }
+
+        /* Cursor glow effect */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: left 0.15s ease-out, top 0.15s ease-out;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 class="text-center">Привет! Я Александр Алёшкин 👋</h1>
-    <h3 class="text-center" style="color: #586069; font-weight: 400;">Full-Stack Developer | QA Engineer | Data Scientist | Преподаватель</h3>
+<div class="cursor-glow" id="cursorGlow"></div>
 
-    <p class="text-center" style="margin-top: 20px;">
-        <a href="mailto:axlifreeway@hotmail.com" target="_blank">
-            <img src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" alt="Email">
-        </a>
-        <a href="https://github.com/Axlifreeway" target="_blank">
-            <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
-        </a>
-    </p>
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-logo">axl<span>:~$</span></a>
+    <ul class="nav-links">
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#stack">Стек</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#teaching">Преподавание</a></li>
+        <li><a href="#stats">GitHub</a></li>
+        <li><a href="#contact">Контакты</a></li>
+    </ul>
+</nav>
 
-    <!-- БЛОК ДЛЯ ЖЮРИ КОНКУРСА -->
-    <div class="contest-banner">
-        <h3>🏆 Конкурс «Педагог года Тюменской области»</h3>
-        <p>Добро пожаловать на мой личный сайт! Здесь представлены мои профессиональные компетенции и публикуемые материалы.</p>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content">
+        <div class="hero-tag">
+            <span class="dot"></span>
+            Доступен для новых проектов
+        </div>
+        <h1>Александр<br><span class="gradient-text">Алёшкин</span></h1>
+        <p class="hero-desc">Full-Stack разработчик, QA-инженер, Data Scientist и преподаватель профессиональных IT-дисциплин в Колледже ИИ ТюмГУ. Совмещаю реальную практику разработки с передачей знаний.</p>
+        <div class="hero-actions">
+            <a href="https://github.com/Axlifreeway" target="_blank" class="btn btn-primary">
+                &#9733; GitHub Profile
+            </a>
+            <a href="mailto:a.a.aleshkin@utmn.ru" class="btn btn-ghost">
+                &#9993; Написать мне
+            </a>
+        </div>
     </div>
+</section>
 
-    <h2>👨‍💻 Обо мне</h2>
-    <p>Я — разработчик и выпускник ТюмГУ.</p>
-    <p>Мой опыт охватывает весь цикл разработки: от проектирования API на <strong>.NET</strong> и <strong>Laravel</strong> до автоматизации тестирования с помощью <strong>Selenide</strong> и анализа данных на <strong>Python</strong>. Сейчас я также активно занимаюсь передачей своего опыта и преподаванием, объединяя академические знания и реальную IT-практику.</p>
-
-    <h2>🛠️ Мой технологический стек и инструменты</h2>
-    
-    <div class="badges">
-        <p><strong>🔷 Backend & Frameworks</strong><br>
-        <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
-        <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
-        <img src="https://img.shields.io/badge/ASP.NET-512BD4?style=for-the-badge&logo=asp.net&logoColor=white">
-        <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
-        <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
-        </p>
-
-        <p><strong>🔷 Databases</strong><br>
-        <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white">
-        <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white">
-        <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-        </p>
-
-        <p><strong>🔷 Testing & QA</strong><br>
-        <img src="https://img.shields.io/badge/Selenide-3d9a75?style=for-the-badge">
-        <img src="https://img.shields.io/badge/TDD-Green?style=for-the-badge">
-        <img src="https://img.shields.io/badge/Автотесты-blueviolet?style=for-the-badge">
-        </p>
-
-        <p><strong>🔷 Tools</strong><br>
-        <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
-        <img src="https://img.shields.io/badge/GitFlow-F05032?style=for-the-badge&logo=git&logoColor=white">
-        <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-        <img src="https://img.shields.io/badge/CI/CD-2088FF?style=for-the-badge&logo=gitlab&logoColor=white">
-        <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
-        </p>
-    </div>
-
-    <h2>📊 Моя IT-практика (GitHub)</h2>
-    <!-- Я убрал таблицу и сделал flex-контейнер, чтобы с телефона всё красиво перестраивалось -->
-    <div class="stats-container">
-        <img src="https://github-readme-stats.vercel.app/api?username=Axlifreeway&show_icons=true&theme=tokyonight&count_private=true&hide_border=true&bg_color=0D1117" alt="Статистика Axlifreeway" />
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Axlifreeway&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117" alt="Топ языки" />
-    </div>
-    <div class="stats-container" style="margin-top: 10px;">
-        <img src="https://github-readme-activity-graph.vercel.app/graph?username=Axlifreeway&theme=tokyo-night&hide_border=true&bg_color=0D1117" alt="График активности"/>
-    </div>
-
-    <div class="footer">
-        © 2026 Александр Алёшкин.
+<!-- CONTEST -->
+<div class="contest-banner reveal">
+    <div class="contest-card">
+        <div class="contest-icon">&#127942;</div>
+        <div class="contest-text">
+            <h3>Конкурс «Педагог года Тюменской области»</h3>
+            <p>Добро пожаловать на мой личный сайт! Здесь представлены профессиональные компетенции, проекты и учебные материалы.</p>
+        </div>
     </div>
 </div>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-header reveal">
+        <div class="section-label">// about</div>
+        <h2 class="section-title">Обо мне</h2>
+    </div>
+    <div class="about-grid">
+        <div class="about-text reveal">
+            <p>Я — <strong>разработчик и выпускник ТюмГУ</strong>, сейчас заканчиваю магистратуру по направлению «Прикладная информатика».</p>
+            <br>
+            <p>Мой опыт охватывает весь цикл разработки: от проектирования API на <strong>.NET</strong> и <strong>Laravel</strong> до автоматизации тестирования с помощью <strong>Selenide</strong> и анализа данных на <strong>Python</strong>.</p>
+            <br>
+            <p>С ноября 2025 года преподаю IT-дисциплины в <strong>Колледже искусственного интеллекта, креативного мышления и мастерства при ТюмГУ</strong> по специальности 09.01.03, объединяя академические знания и реальную практику индустрии.</p>
+        </div>
+        <div class="stats-row reveal">
+            <div class="stat-card">
+                <div class="stat-number">16</div>
+                <div class="stat-label">Репозиториев</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Технологий</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Дисциплины</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">&#8734;</div>
+                <div class="stat-label">Любовь к коду</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+    <div class="section-header reveal">
+        <div class="section-label">// tech_stack</div>
+        <h2 class="section-title">Технологический стек</h2>
+    </div>
+    <div class="stack-categories">
+        <div class="stack-category reveal">
+            <div class="stack-cat-header">
+                <div class="stack-cat-icon backend">&#9881;</div>
+                <span class="stack-cat-name">Backend & Frameworks</span>
+            </div>
+            <div class="stack-tags">
+                <span class="stack-tag">Python</span>
+                <span class="stack-tag">C#</span>
+                <span class="stack-tag">ASP.NET</span>
+                <span class="stack-tag">.NET 7/8</span>
+                <span class="stack-tag">PHP</span>
+                <span class="stack-tag">Laravel</span>
+                <span class="stack-tag">gRPC</span>
+                <span class="stack-tag">REST API</span>
+            </div>
+        </div>
+        <div class="stack-category reveal">
+            <div class="stack-cat-header">
+                <div class="stack-cat-icon db">&#128451;</div>
+                <span class="stack-cat-name">Базы данных</span>
+            </div>
+            <div class="stack-tags">
+                <span class="stack-tag">PostgreSQL</span>
+                <span class="stack-tag">MS SQL Server</span>
+                <span class="stack-tag">MySQL</span>
+                <span class="stack-tag">Entity Framework</span>
+            </div>
+        </div>
+        <div class="stack-category reveal">
+            <div class="stack-cat-header">
+                <div class="stack-cat-icon data">&#129302;</div>
+                <span class="stack-cat-name">Data Science & ML</span>
+            </div>
+            <div class="stack-tags">
+                <span class="stack-tag">PyTorch</span>
+                <span class="stack-tag">scikit-learn</span>
+                <span class="stack-tag">Pandas</span>
+                <span class="stack-tag">EfficientNet</span>
+                <span class="stack-tag">Audio ML</span>
+                <span class="stack-tag">Computer Vision</span>
+            </div>
+        </div>
+        <div class="stack-category reveal">
+            <div class="stack-cat-header">
+                <div class="stack-cat-icon qa">&#9989;</div>
+                <span class="stack-cat-name">Testing & QA</span>
+            </div>
+            <div class="stack-tags">
+                <span class="stack-tag">Selenide</span>
+                <span class="stack-tag">TDD</span>
+                <span class="stack-tag">Автотесты</span>
+            </div>
+        </div>
+        <div class="stack-category reveal">
+            <div class="stack-cat-header">
+                <div class="stack-cat-icon tools">&#128736;</div>
+                <span class="stack-cat-name">DevOps & Инструменты</span>
+            </div>
+            <div class="stack-tags">
+                <span class="stack-tag">Git / GitFlow</span>
+                <span class="stack-tag">Docker</span>
+                <span class="stack-tag">Docker Compose</span>
+                <span class="stack-tag">CI/CD</span>
+                <span class="stack-tag">GitHub Actions</span>
+                <span class="stack-tag">Linux</span>
+                <span class="stack-tag">Nginx</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-header reveal">
+        <div class="section-label">// projects</div>
+        <h2 class="section-title">Проекты</h2>
+    </div>
+    <div class="projects-grid">
+        <a href="https://github.com/Axlifreeway/DomovoiContainers" target="_blank" class="project-card reveal">
+            <div class="project-header">
+                <div class="project-icon green">&#127968;</div>
+                <span class="project-link">&#8599;</span>
+            </div>
+            <div class="project-name">Domovoi</div>
+            <div class="project-desc">Полнофункциональная платформа для работы с недвижимостью. Микросервисная архитектура с отдельными контейнерами для бэкенда, фронтенда и базы данных.</div>
+            <div class="project-tech">
+                <span>ASP.NET 8</span>
+                <span>Vite + React</span>
+                <span>PostgreSQL</span>
+                <span>Docker</span>
+            </div>
+        </a>
+
+        <a href="https://github.com/Axlifreeway/animal-health-grpc" target="_blank" class="project-card reveal">
+            <div class="project-header">
+                <div class="project-icon purple">&#128062;</div>
+                <span class="project-link">&#8599;</span>
+            </div>
+            <div class="project-name">AnimalHealth gRPC</div>
+            <div class="project-desc">Система учёта ветеринарных осмотров и вакцинации. Архитектура Clean Architecture с gRPC-сервисами, паттерном State и кэшированием.</div>
+            <div class="project-tech">
+                <span>ASP.NET 7</span>
+                <span>gRPC / Protobuf</span>
+                <span>PostgreSQL</span>
+                <span>Serilog + Seq</span>
+            </div>
+        </a>
+
+        <a href="https://github.com/Axlifreeway/Sokoban" target="_blank" class="project-card reveal">
+            <div class="project-header">
+                <div class="project-icon amber">&#127918;</div>
+                <span class="project-link">&#8599;</span>
+            </div>
+            <div class="project-name">Sokoban</div>
+            <div class="project-desc">Игра-головоломка Sokoban с мобами, боссами, системой здоровья, BFS-поиском пути, спрайтовой анимацией и саундтреком. Командный проект.</div>
+            <div class="project-tech">
+                <span>C# WinForms</span>
+                <span>DirectX Audio</span>
+                <span>BFS Pathfinding</span>
+            </div>
+        </a>
+
+        <a href="https://github.com/Axlifreeway/ClientSide" target="_blank" class="project-card reveal">
+            <div class="project-header">
+                <div class="project-icon blue">&#128187;</div>
+                <span class="project-link">&#8599;</span>
+            </div>
+            <div class="project-name">ClientSide</div>
+            <div class="project-desc">Клиентское WPF/WinForms-приложение для взаимодействия с backend-сервисами. Десктоп-интерфейс к серверным API.</div>
+            <div class="project-tech">
+                <span>C#</span>
+                <span>WPF / WinForms</span>
+                <span>.NET</span>
+            </div>
+        </a>
+
+        <a href="https://github.com/Axlifreeway/Reinforcement-Learning-for-Doomlike" target="_blank" class="project-card reveal">
+            <div class="project-header">
+                <div class="project-icon green">&#129302;</div>
+                <span class="project-link">&#8599;</span>
+            </div>
+            <div class="project-name">RL for Doomlike</div>
+            <div class="project-desc">Обучение с подкреплением (Reinforcement Learning) для Doom-подобной среды. Эксперименты с агентами, наградами и игровыми сценариями.</div>
+            <div class="project-tech">
+                <span>Python</span>
+                <span>Reinforcement Learning</span>
+                <span>ViZDoom</span>
+            </div>
+        </a>
+
+        <div class="project-card reveal" style="justify-content: center; align-items: center; border-style: dashed; background: transparent;">
+            <a href="https://github.com/Axlifreeway?tab=repositories" target="_blank" style="text-decoration: none; text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">+</div>
+                <div class="project-name" style="color: var(--text-dim);">Ещё 10+ репозиториев</div>
+                <div class="project-desc">Посмотреть все проекты на GitHub</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+    <div class="section-header reveal">
+        <div class="section-label">// teaching</div>
+        <h2 class="section-title">Преподавание</h2>
+    </div>
+    <div class="teaching-card reveal">
+        <p style="color: var(--text-dim); font-size: 0.95rem; position: relative; z-index: 1;">
+            Преподаватель профессиональных дисциплин в <strong style="color: var(--text-bright);">Колледже ИИ, креативного мышления и мастерства при ТюмГУ</strong>. 
+            Специальность 09.01.03 — «Оператор информационных систем и ресурсов».
+        </p>
+        <div class="teaching-items" style="position: relative; z-index: 1;">
+            <div class="teaching-item">
+                <div class="teaching-item-icon">&#128451;</div>
+                <div>
+                    <div class="teaching-item-text">Базы данных</div>
+                    <div class="teaching-item-sub">SQL, PostgreSQL, нормализация, транзакции</div>
+                </div>
+            </div>
+            <div class="teaching-item">
+                <div class="teaching-item-icon">&#127760;</div>
+                <div>
+                    <div class="teaching-item-text">Работа в CMS</div>
+                    <div class="teaching-item-sub">WordPress, создание и управление сайтами</div>
+                </div>
+            </div>
+            <div class="teaching-item">
+                <div class="teaching-item-icon">&#128202;</div>
+                <div>
+                    <div class="teaching-item-text">Основы управления веб-ресурсами</div>
+                    <div class="teaching-item-sub">Веб-аналитика, SEO, оценка эффективности</div>
+                </div>
+            </div>
+            <div class="teaching-item">
+                <div class="teaching-item-icon">&#128218;</div>
+                <div>
+                    <div class="teaching-item-text">И другие дисциплины</div>
+                    <div class="teaching-item-sub">Информационная безопасность, веб-технологии</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GITHUB STATS -->
+<section id="stats">
+    <div class="section-header reveal">
+        <div class="section-label">// github_stats</div>
+        <h2 class="section-title">Активность на GitHub</h2>
+    </div>
+    <div class="github-stats reveal">
+        <img src="https://github-readme-stats.vercel.app/api?username=Axlifreeway&show_icons=true&theme=tokyonight&count_private=true&hide_border=true&bg_color=12121a&title_color=00d4aa&icon_color=7c3aed&text_color=e4e4e7&ring_color=00d4aa" alt="GitHub Stats" loading="lazy" />
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Axlifreeway&layout=compact&theme=tokyonight&hide_border=true&bg_color=12121a&title_color=00d4aa&text_color=e4e4e7" alt="Top Languages" loading="lazy" />
+    </div>
+    <div class="github-stats reveal" style="margin-top: 1.5rem;">
+        <img src="https://github-readme-activity-graph.vercel.app/graph?username=Axlifreeway&theme=tokyo-night&hide_border=true&bg_color=12121a&color=00d4aa&line=7c3aed&point=f59e0b" alt="Activity Graph" loading="lazy" />
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-header reveal">
+        <div class="section-label">// contact</div>
+        <h2 class="section-title">Связаться со мной</h2>
+    </div>
+    <div class="contact-grid reveal">
+        <a href="https://github.com/Axlifreeway" target="_blank" class="contact-card">
+            <div class="contact-icon github">&#128025;</div>
+            <div>
+                <div class="contact-name">GitHub</div>
+                <div class="contact-handle">@Axlifreeway</div>
+            </div>
+        </a>
+        <a href="mailto:a.a.aleshkin@utmn.ru" class="contact-card">
+            <div class="contact-icon email">&#9993;</div>
+            <div>
+                <div class="contact-name">Email</div>
+                <div class="contact-handle">a.a.aleshkin@utmn.ru</div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Александр Алёшкин &middot; <span class="footer-mono">Тюмень, Россия</span></p>
+    <p style="margin-top: 0.3rem; font-size: 0.75rem;">Сделано с &#10084;&#65039; и любовью к чистому коду</p>
+</footer>
+
+<script>
+    // Cursor glow
+    const glow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav hide on scroll
+    let lastScroll = 0;
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            nav.style.transform = 'translateY(-100%)';
+        } else {
+            nav.style.transform = 'translateY(0)';
+        }
+        lastScroll = currentScroll;
+    });
+</script>
 
 </body>
 </html>
